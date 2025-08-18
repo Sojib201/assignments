@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/campaign_controller.dart';
+import '../utils/colors.dart';
+import '../utils/constants.dart';
+import '../utils/responsives.dart';
 
 class CampaignPage extends StatelessWidget {
   CampaignPage({super.key});
@@ -12,21 +15,26 @@ class CampaignPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),
-        title: const Text('Campaign Matching'),
+        title: Text(
+          'Campaign Matching',
+          style: TextStyle(fontSize: Responsive.font(20), fontWeight: FontWeight.w600),
+        ),
         centerTitle: false,
       ),
       body: Column(
         children: [
-          const SizedBox(height: 8),
+          SizedBox(height: Responsive.height(8)),
           Obx(() => _tabs(controller)),
-          const Divider(height: 1),
+          Divider(height: 1, color: Colors.grey.shade300),
           Expanded(
-            child: Obx(() => ListView.separated(
-              padding: const EdgeInsets.all(16),
-              itemBuilder: (_, i) => _item(controller.items[i]),
-              separatorBuilder: (_, __) => const SizedBox(height: 16),
-              itemCount: controller.items.length,
-            )),
+            child: Obx(
+                  () => ListView.separated(
+                padding: EdgeInsets.all(Responsive.width(AppConstants.defaultPadding)),
+                itemBuilder: (_, i) => _item(controller.items[i]),
+                separatorBuilder: (_, __) => SizedBox(height: Responsive.height(16)),
+                itemCount: controller.items.length,
+              ),
+            ),
           ),
         ],
       ),
@@ -43,20 +51,24 @@ class CampaignPage extends StatelessWidget {
           child: GestureDetector(
             onTap: () => c.tabIndex.value = i,
             child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 16),
+              padding: EdgeInsets.symmetric(vertical: Responsive.height(16)),
               decoration: BoxDecoration(
                 border: Border(
-                    bottom: BorderSide(
-                        width: 3,
-                        color: selected
-                            ? const Color(0xFF6D35D3)
-                            : Colors.transparent)),
+                  bottom: BorderSide(
+                    width: Responsive.height(3),
+                    color: selected ? AppColors.primary : Colors.transparent,
+                  ),
+                ),
               ),
-              child: Text(labels[i],
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      color: selected ? Colors.black : Colors.grey)),
+              child: Text(
+                labels[i],
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: selected ? AppColors.textPrimary : AppColors.textSecondary,
+                  fontSize: Responsive.font(16),
+                ),
+              ),
             ),
           ),
         );
@@ -69,28 +81,48 @@ class CampaignPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ClipRRect(
-          borderRadius: BorderRadius.circular(16),
-          child:
-          Image.network(item.imageUrl, width: 96, height: 96, fit: BoxFit.cover),
+          borderRadius: BorderRadius.circular(Responsive.width(AppConstants.borderRadius)),
+          child: Image.network(
+            item.imageUrl,
+            width: Responsive.width(96),
+            height: Responsive.width(96),
+            fit: BoxFit.cover,
+          ),
         ),
-        const SizedBox(width: 12),
+        SizedBox(width: Responsive.width(12)),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(item.title,
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
-              const SizedBox(height: 4),
-              Text(item.subtitle, maxLines: 1, overflow: TextOverflow.ellipsis),
-              const SizedBox(height: 8),
+              Text(
+                item.title,
+                style: TextStyle(
+                  fontSize: Responsive.font(18),
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+              SizedBox(height: Responsive.height(4)),
+              Text(
+                item.subtitle,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontSize: Responsive.font(14), color: AppColors.textSecondary),
+              ),
+              SizedBox(height: Responsive.height(8)),
               Wrap(
-                spacing: 8,
-                runSpacing: 8,
+                spacing: Responsive.width(8),
+                runSpacing: Responsive.height(8),
                 children: item.tags
-                    .map((t) => Chip(
-                  label: Text(t),
-                  backgroundColor: const Color(0xFFF0E8FF),
-                ))
+                    .map(
+                      (t) => Chip(
+                    label: Text(
+                      t,
+                      style: TextStyle(fontSize: Responsive.font(12), color: AppColors.primary),
+                    ),
+                    backgroundColor: AppColors.primary.withOpacity(0.1),
+                  ),
+                )
                     .toList(),
               ),
             ],

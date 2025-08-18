@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/myinfo_controller.dart';
+import '../utils/responsives.dart';
 import '../widgets/labeled_field.dart';
 import '../widgets/primary_button.dart';
+import '../utils/colors.dart';
+import '../utils/constants.dart';
 
 class BasicInfoPage extends StatelessWidget {
   BasicInfoPage({super.key});
@@ -15,18 +18,20 @@ class BasicInfoPage extends StatelessWidget {
     final nickname = TextEditingController(text: c.nickname.value);
     final instagram = TextEditingController(text: c.instagram.value);
     final portfolioLink = TextEditingController(text: c.portfolioLink.value);
-    final portfolioFile =
-    TextEditingController(text: c.portfolioFileName.value);
+    final portfolioFile = TextEditingController(text: c.portfolioFileName.value);
 
     void markDirty() => c.markDirty();
 
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),
-        title: const Text('Basic Info'),
+        title: Text(
+          'Basic Info',
+          style: TextStyle(fontSize: Responsive.font(20), fontWeight: FontWeight.w600),
+        ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(Responsive.width(AppConstants.defaultPadding)),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,53 +41,70 @@ class BasicInfoPage extends StatelessWidget {
                 controller: TextEditingController(text: c.userId.value),
                 readOnly: true,
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: Responsive.height(16)),
               LabeledField(
                 label: 'Email',
                 controller: email,
               )..controller.addListener(markDirty),
-              const SizedBox(height: 16),
+              SizedBox(height: Responsive.height(16)),
               LabeledField(
                 label: 'Phone Number',
                 controller: phone,
                 keyboardType: TextInputType.phone,
                 trailing: Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
+                  padding: EdgeInsets.only(right: Responsive.width(8)),
                   child: ElevatedButton(
                     onPressed: () {},
-                    child: const Text('Change'),
+                    child: Text(
+                      'Change',
+                      style: TextStyle(fontSize: Responsive.font(14)),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: Responsive.width(12),
+                        vertical: Responsive.height(8),
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(Responsive.width(8)),
+                      ),
+                    ),
                   ),
                 ),
               )..controller.addListener(markDirty),
-              const SizedBox(height: 16),
+              SizedBox(height: Responsive.height(16)),
               LabeledField(
                 label: 'Nickname',
                 controller: nickname,
               )..controller.addListener(markDirty),
-              const SizedBox(height: 16),
+              SizedBox(height: Responsive.height(16)),
               LabeledField(
                 label: 'Instagram ID',
                 controller: instagram,
               )..controller.addListener(markDirty),
-              const SizedBox(height: 16),
+              SizedBox(height: Responsive.height(16)),
               LabeledField(
                 label: 'Portfolio Link',
                 controller: portfolioLink,
               )..controller.addListener(markDirty),
-              const SizedBox(height: 16),
+              SizedBox(height: Responsive.height(16)),
               LabeledField(
                 label: 'Portfolio',
                 controller: portfolioFile,
-                trailing: const Icon(Icons.attach_file),
+                trailing: Icon(Icons.attach_file, size: Responsive.width(24), color: AppColors.textSecondary),
               )..controller.addListener(markDirty),
-              const SizedBox(height: 24),
+              SizedBox(height: Responsive.height(24)),
               Obx(
                     () => PrimaryButton(
                   label: 'Save',
                   disabled: !c.canSave.value,
                   onPressed: () {
                     c.canSave.value = false;
-                    Get.snackbar('Saved', 'Your basic info has been updated.');
+                    Get.snackbar(
+                      'Saved',
+                      'Your basic info has been updated.',
+                      backgroundColor: AppColors.primary.withOpacity(0.1),
+                      colorText: AppColors.textPrimary,
+                    );
                   },
                 ),
               ),

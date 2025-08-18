@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../app_routes.dart';
+import '../utils/colors.dart';
+import '../utils/constants.dart';
+import '../utils/responsives.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -13,7 +16,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(milliseconds: 900), () {
+    Future.delayed(const Duration(seconds: 3), () {
       Get.offAllNamed(Routes.home);
     });
   }
@@ -21,9 +24,16 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF4B1D8B),
-      body: const Center(
-        child: Text('MY FLYN', style: TextStyle(color: Colors.white, fontSize: 40, fontWeight: FontWeight.w700)),
+      backgroundColor: AppColors.primary,
+      body: Center(
+        child: Text(
+          AppConstants.appName.toUpperCase(),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: Responsive.font(40),
+            fontWeight: FontWeight.w700,
+          ),
+        ),
       ),
     );
   }
