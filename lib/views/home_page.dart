@@ -23,70 +23,100 @@ class HomePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: Responsive.height(16)),
-              Text('Hello,', style: Theme.of(context).textTheme.titleMedium),
-              Obx(() => Text(
-                controller.userName.value,
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineMedium
-                    ?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              )),
-              SizedBox(height: Responsive.height(16)),
-              Align(
-                alignment: Alignment.centerRight,
-                child: GestureDetector(
-                  onTap: () async {
-                    await perm.requestPhoto();
-                    Get.snackbar(
-                      'Permission',
-                      perm.photoGranted.value
-                          ? 'Photo permission granted'
-                          : 'Permission denied',
-                    );
-                  },
-                  child: Column(
+              SizedBox(height: Responsive.height(20)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        width: Responsive.width(88),
-                        height: Responsive.width(88),
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade200,
-                          shape: BoxShape.circle,
+                      Text('Hello,', style: Theme.of(context).textTheme.titleMedium),
+                      Obx(() => Text(
+                        controller.userName.value,
+                        style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold,
                         ),
-                        child: Icon(Icons.camera_alt_outlined, size: Responsive.width(32)),
-                      ),
-                      SizedBox(height: Responsive.height(8)),
-                      const Text('Add Image'),
+                      )),
                     ],
                   ),
-                ),
-              ),
-              SizedBox(height: Responsive.height(16)),
-              Container(
-                padding: EdgeInsets.all(Responsive.width(16)),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(Responsive.width(AppConstants.borderRadius)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
-                      blurRadius: 10,
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: GestureDetector(
+                      onTap: () async {
+                        await perm.requestPhoto();
+                        Get.snackbar(
+                          'Permission',
+                          perm.photoGranted.value
+                              ? 'Photo permission granted'
+                              : 'Permission denied',
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          Container(
+                            width: Responsive.width(95),
+                            height: Responsive.width(95),
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade200,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.camera_alt_outlined, size: Responsive.width(32)),
+                                Text('Add Image'),
+                              ],
+                            ),
+                          ),
+                          //SizedBox(height: Responsive.height(8)),
+                        ],
+                      ),
                     ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    _counter('Applied', controller.appliedCount),
-                    Icon(Icons.chevron_right_rounded, size: Responsive.width(24)),
-                    _counter('In Progress', controller.inProgressCount),
-                    Icon(Icons.chevron_right_rounded, size: Responsive.width(24)),
-                    _counter('Completed', controller.completedCount),
-                    Icon(Icons.chevron_right_rounded, size: Responsive.width(24)),
-                  ],
+                  ),
+                ],
+              ),
+              SizedBox(height: Responsive.height(22)),
+              GestureDetector(
+                onTap: (){
+                  Get.toNamed(Routes.campaign);
+                },
+                child: Container(
+                  padding: EdgeInsets.all(Responsive.width(16)),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(Responsive.width(AppConstants.borderRadius)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 10,
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('My Campaign',),
+                          //SizedBox(height: Responsive.height(60)),
+                          Icon(
+                           Icons.chevron_right_rounded, size: Responsive.width(24),),
+                        ],
+                      ),
+                      SizedBox(height: Responsive.height(30)),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          _counter('Applied', controller.appliedCount),
+                          Icon(Icons.chevron_right_rounded, size: Responsive.width(24)),
+                          _counter('In Progress', controller.inProgressCount),
+                          Icon(Icons.chevron_right_rounded, size: Responsive.width(24)),
+                          _counter('Completed', controller.completedCount),
+                          Icon(Icons.chevron_right_rounded, size: Responsive.width(24)),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(height: Responsive.height(24)),
@@ -95,11 +125,11 @@ class HomePage extends StatelessWidget {
                 title: 'My Info',
                 onTap: () => Get.toNamed(Routes.myInfo),
               ),
-              _menuTile(
-                icon: Icons.campaign_outlined,
-                title: 'Campaign Matching',
-                onTap: () => Get.toNamed(Routes.campaign),
-              ),
+              // _menuTile(
+              //   icon: Icons.campaign_outlined,
+              //   title: 'Campaign Matching',
+              //   onTap: () => Get.toNamed(Routes.campaign),
+              // ),
               _menuTile(icon: Icons.notifications_none, title: 'Notices'),
               _menuTile(icon: Icons.chat_bubble_outline, title: '1:1 Inquiry'),
               _menuTile(icon: Icons.help_outline, title: 'FAQ'),

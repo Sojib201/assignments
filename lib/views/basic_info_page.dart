@@ -55,10 +55,6 @@ class BasicInfoPage extends StatelessWidget {
                   padding: EdgeInsets.only(right: Responsive.width(8)),
                   child: ElevatedButton(
                     onPressed: () {},
-                    child: Text(
-                      'Change',
-                      style: TextStyle(fontSize: Responsive.font(14)),
-                    ),
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(
                         horizontal: Responsive.width(12),
@@ -67,6 +63,10 @@ class BasicInfoPage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(Responsive.width(8)),
                       ),
+                    ),
+                    child: Text(
+                      'Change',
+                      style: TextStyle(fontSize: Responsive.font(14)),
                     ),
                   ),
                 ),
